@@ -24,6 +24,8 @@ final class Server
      */
     public function __construct()
     {
+        $this->CORS();
+
         $this->io = new SocketIO(self::SERVER_PORT);
 
         //=============
@@ -85,5 +87,15 @@ final class Server
     public function start(): void
     {
         Worker::runAll();
+    }
+
+    /**
+     * Убирает ограничения междоменных запросов
+     */
+    private function CORS(): void
+    {
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, POST');
+        header("Access-Control-Allow-Headers: X-Requested-With");
     }
 }
